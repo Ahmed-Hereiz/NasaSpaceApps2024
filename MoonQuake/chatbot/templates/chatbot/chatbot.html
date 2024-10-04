@@ -1,0 +1,30 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block mainBlock %}
+    <div class="chatbot">
+        <ul class="chat-container" id="chatContainer" chatbot-url={% url 'chat' %}>
+            <li class="chat bot">
+                <div class="message">Welcome to MoonQuake ChatBot! How can I help you today?</div>
+            </li>
+        </ul>
+        <div class="user-input" >
+            <form id="chatForm" method="post">
+                {% csrf_token %}
+                <textarea 
+                    id="userInput" 
+                    placeholder="Type a message..." 
+                    required
+                ></textarea>
+                <button type="submit" id="sendButton" class="send-button">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://kit.fontawesome.com/176dc6acf1.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}

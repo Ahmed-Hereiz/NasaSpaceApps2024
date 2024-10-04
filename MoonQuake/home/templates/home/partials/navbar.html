@@ -1,0 +1,14 @@
+{% load static %}
+<section id="header">
+            <div class="logo-div">
+                <img src="{% static 'images/moon-logo.jpg' %}" class="logo">
+                <h1 class="logoh1">MoonQuake</h1>
+            </div>
+            <div>
+                <ul id="navbar">
+                    <li><a class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url "home" %}">Home</a></li>
+                    <li><a class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url "about" %}">About</a></li>
+                    <li><a class="{% if request.resolver_match.url_name == 'solution' %}active{% endif %}" href="{% url "solution" %}">Solution</a></li>
+                </ul>
+            </div>
+</section>
