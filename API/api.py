@@ -5,6 +5,7 @@ import json
 import os
 import time
 from obspy import read
+from Seismic import from_ms2data, VitInference
 from Seismic import STALTA
 import yaml
 import httpx
@@ -51,6 +52,7 @@ async def get_quake_startpoint(file: UploadFile = File(...)):
     with open(SAVE_FILE_PATH+file.filename, "wb") as f:
         f.write(content)
 
-    st = read(SAVE_FILE_PATH+file.filename)
-    time = sta_lst.get_start(st)
+    vel, mode, st = from_ms2data(SAVE_FILE_PATH+file.filename)
+    use_vit = VitInference(model_path="vit_seismic.pt",data_max_length=572427)
+    time = use_vit(vel=vel,mode=mode)
     return JSONResponse({"startPoint": time})
