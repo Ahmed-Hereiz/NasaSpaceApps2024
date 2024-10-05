@@ -18,7 +18,7 @@ app = FastAPI()
 sta_lst = STALTA()
 
 
-@app.post("/get-quake-startpoint")
+@app.post("/get-stalta-startpoint")
 async def get_quake_startpoint(file: UploadFile = File(...)):
     
     SAVE_FILE_PATH = "tmp/"
@@ -31,3 +31,16 @@ async def get_quake_startpoint(file: UploadFile = File(...)):
     time = sta_lst.get_start(st)
     return JSONResponse({"startPoint": time})
 
+
+@app.post("/get-vit-startpoint")
+async def get_quake_startpoint(file: UploadFile = File(...)):
+    
+    SAVE_FILE_PATH = "tmp/"
+    content = await file.read()
+
+    with open(SAVE_FILE_PATH+file.filename, "wb") as f:
+        f.write(content)
+
+    st = read(SAVE_FILE_PATH+file.filename)
+    time = sta_lst.get_start(st)
+    return JSONResponse({"startPoint": time})
