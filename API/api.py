@@ -8,6 +8,7 @@ from obspy import read
 from Seismic import STALTA
 import yaml
 import httpx
+import matplotlib.pyplot as plt
 
 app = FastAPI()
 
@@ -28,7 +29,16 @@ async def get_quake_startpoint(file: UploadFile = File(...)):
         f.write(content)
 
     st = read(SAVE_FILE_PATH+file.filename)
-    time = sta_lst.get_start(st)
+    arrival = sta_lst.get_start(st)
+    fig, ax = plt.subplots(1,1,figsize=(12,3))
+    ax.axvline(x = arrival, color='red', label='Trig. On')
+
+    tr_times = st[0].times()
+    tr_data = st[0].data    
+
+    # Plot seismogram
+    plt.plot([1, 2, 3, 4], [10, 20, 25, 30])
+    plt.savefig("MoonQuake/analyzer/static/images/plot.png") 
     return JSONResponse({"startPoint": time})
 
 

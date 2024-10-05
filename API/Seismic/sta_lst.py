@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 from obspy.signal.invsim import cosine_taper
 from obspy.signal.filter import highpass
