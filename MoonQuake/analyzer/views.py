@@ -14,24 +14,24 @@ def analyzerView(request):
             uploaded_file = request.FILES.get('file')
             if uploaded_file:
                 try:
-                    analyzer_endpoint_url = f"{
-                        api_base_url}/get-quake-startpoint"
+                    analyzer_endpoint_url = f"{api_base_url}/get-stalta-startpoint"
+                    
                     files = {'file': uploaded_file}
                     response = requests.post(
                         analyzer_endpoint_url, files=files)
                     response.raise_for_status()
                     if response.status_code == 200:
                         startPoint = response.json().get("startPoint")
-                        if startPoint :
-                            api_get_img_endpoint_url = f"{
-                                api_base_url}/get-chart-from-quake-startpoint"
-                            response = requests.post(
-                                api_get_img_endpoint_url, json={"startPoint": str(startPoint)})
-                            img = response.json().get("image_url")
+                        img_url = response.json().get("path")
+                        # if startPoint :
+                        #     api_get_img_endpoint_url = f"{api_base_url}/get-chart-from-quake-startpoint"
+                        #     response = requests.post(
+                        #         api_get_img_endpoint_url, json={"startPoint": str(startPoint)})
+                        #     img = response.json().get("image_url")
                         return render(request, 'analyzer/analyzer.html', {
                             "form": form,
                             'startPoint': startPoint,
-                            'image_url': img
+                            'image_url': img_url
                         })
                 except requests.RequestException as e:
                     return render(request, 'analyzer/analyzer.html', {

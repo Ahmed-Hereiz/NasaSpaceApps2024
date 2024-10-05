@@ -1,4 +1,5 @@
 {% extends "home/base.html" %}
+{% load static%}
 {% block mainBlock %}
 <div class="container">
     <div class="row">
@@ -42,7 +43,8 @@
                 {% endif %}
 
                 {% if image_url %}
-                <img src="{{ image_url }}" class="img-fluid" alt="Result Image">
+                <img src="{% static image_url %}" class="img-fluid" alt="Result Image">
+
                 {% endif %}
         </div>
     </div>
